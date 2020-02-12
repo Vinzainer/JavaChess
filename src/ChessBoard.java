@@ -55,4 +55,27 @@ public class ChessBoard {
         return str;
     }
 
+    public int setAt(ChessPiece piece ,int posx ,int posy){
+        /* ChessPiece * int * int -> int
+           Set-er  for Board 
+           return 1 if successfull*/
+        if(posx >= 8 || posx < 0) return 0;
+        if(posx >= 8 || posx < 0) return 0;
+
+        if(piece == null){            //
+            board[posx][posy] = null; //Maybe useless
+        }                             //
+        else{
+            board[posx][posy] = piece;
+        }
+
+        return 1;
+    }
+
+    public ChessPiece getAt(int posx, int posy){
+        /* int * int -> ChessPiece
+           get-er for Board */
+        return board[posx][posy];
+    }
+
 }
