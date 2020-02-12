@@ -5,4 +5,8 @@ public class Rook extends ChessPiece{
         /* Constructor  String -> Rook */
         super("Rook", color);
     }
+
+    public String toString(){
+        return super.toString();
+    }
 }

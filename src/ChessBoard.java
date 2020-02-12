@@ -43,12 +43,12 @@ public class ChessBoard {
         String str = "";
         for (int i = 0; i < 8; i++){
             str += "\n";
-            for (int j = 8; j < 8; j++){
+            for (int j = 0; j < 8; j++){
                 if (board[i][j] == null){
                     str += "null ";
                 }
                 else {
-                    str += "piece ";
+                    str += board[i][j].toString() + " ";
                 }
             }
         }

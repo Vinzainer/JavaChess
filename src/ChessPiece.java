@@ -9,4 +9,12 @@ public abstract class ChessPiece{
         this.color = color;
     }
 
+    public String toString(){
+        return pieceName;
+    }
+
+    public String getColor(){
+        return color;
+    }
+
 }
