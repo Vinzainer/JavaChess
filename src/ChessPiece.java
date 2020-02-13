@@ -22,12 +22,44 @@ public abstract class ChessPiece{
     }
 
     public void setPosition(int posx, int posy){
-      position[0] = posx;
-      position[1] = posy;
+      	position[0] = posx;
+      	position[1] = posy;
     }
 
     public int[] getPosition(){
       return position;
+    }
+
+    private boolean inMoves(int x, int y, int[][] moves){
+        int i = 0;
+        while(moves[i][0] != -1){
+			if(moves[i][0] == x && moves[i][1] == y){
+				return true;
+			}
+          i++;
+        }
+
+      return false;
+    }
+
+    public void printMovesOnBoard(int[][] moves){
+      	String str = "";
+      	for(int i = 0; i < 8; i++){
+		    str += "\n|";
+        	for(int j = 0; j < 8; j++){
+				if(position[0] == i && position[1] == j){
+					str += " P |"; 
+				}
+
+          		else if(inMoves(i, j, moves)){
+					str += " + |";
+				  }
+				else{
+					str += " - |";
+				}
+        	}
+		}
+		System.out.println(str);
     }
 
     public abstract int[][] getMove();

@@ -92,4 +92,71 @@ public class ChessBoard {
         return 1;
     }
 
+    private boolean vertEmpty(int x1, int y1, int x2, int y2){
+
+        // c'est la merde ici
+        
+        int dx = x1 - x2;
+        int dy = y1 - y2;
+
+        if(dx != 0){
+            if(dx < 0){
+                for(int i = x1 + 1; i < x2; i++){
+                    if(board[i][y1] != null && board[i][y1].getColor() == board[x1][y1].getColor()) return false;
+                }
+            }
+            else{
+                for(int i = x1 - 1; i > x2 - 1; i--){
+                    if(board[i][y1] != null && board[i][y1].getColor() == board[x1][y1].getColor()) return false;
+                }
+            }
+        }
+        else{
+            if(dy < 0){
+                for(int i = y1 + 1; i < y2; i++ ){
+                    if(board[x1][i] != null && board[x1][i].getColor() == board[x1][y1].getColor()) return false;
+                }
+            }
+            else{
+                for(int i = y1 - 1; i > y2 -1; i--){
+                    if(board[x1][i] != null && board[x1][i].getColor() == board[x1][y1].getColor()) return false;
+                }
+            } 
+        }
+        return true;
+    }
+
+    public int[][] availableMoves(int[][] moves, ChessPiece piece){
+        int[][] aMoves = new int[64][2];
+        int pieceX = piece.getPosition()[0];
+        int pieceY = piece.getPosition()[1];
+        int j = 0;
+        if(piece instanceof Knight || piece instanceof King){
+            for(int[] move : moves){
+                if(move[0] == -1) break;
+                int x = move[0];
+                int y = move[1];
+                if(board[x][y] == null || board[x][y].getColor() != piece.getColor()){
+                    aMoves[j] = move;
+                    j++; 
+                }
+            }
+        }
+        else if(piece instanceof Rook){
+            for(int[] move : moves){
+                if(move[0] == -1) break;
+                    int x = move[0];
+                    int y = move[1];
+                    
+                    if(vertEmpty(pieceX, pieceY, x, y)){
+                        aMoves[j] = move;
+                        j++;
+                    }
+
+            }
+        }
+        aMoves[j][0] = -1;
+        return aMoves;
+    }
+
 }

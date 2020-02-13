@@ -6,11 +6,11 @@ public class King extends ChessPiece{
     }
 
     public int[][] getMove(){
+      //System.out.println("88");
       int[][] moveList = new int[64][2];
       int x = super.position[0];
       int y = super.position[1];
       int j = 0;
-
       if(x + 1 < 8){
         moveList[j][0] = x+1;
         moveList[j][1] = y;
@@ -52,7 +52,7 @@ public class King extends ChessPiece{
         j++;
       }
       moveList[j][0] = -1;
-
+      moveList[j][1] = -1;
       return moveList;
     }
 }
