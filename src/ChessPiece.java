@@ -1,7 +1,7 @@
 public abstract class ChessPiece{
 
     private String pieceName;
-    private String color;
+    protected String color;
     protected int[] position;
 
     public ChessPiece(String name, String color, int posx, int posy){
