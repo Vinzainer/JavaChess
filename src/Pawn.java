@@ -5,10 +5,6 @@ public class Pawn extends ChessPiece{
         super("Pawn", color, posx, posy);
     }
 
-    public int[] getMove(){
-
-    }
-
     public String toString(){
         return super.toString();
     }
