@@ -7,11 +7,12 @@ public class Main {
 
         System.out.println(b.toString());
 
-        b.movePiece(0,2,4,4);
+        b.movePiece(0,4,4,4);
         System.out.println(b.toString());
-        ChessPiece b1 = b.getAt(4,4);
+        ChessPiece b1 = b.getAt(0,4);
         int[][] ml = new int[64][2];
         ml = b1.getMove();
+        System.out.println("a");
 
         for(int i = 0; i < 64; i++){
           if(ml[i][0] == -1) break;
