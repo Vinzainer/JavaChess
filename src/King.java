@@ -30,6 +30,7 @@ public class King extends ChessPiece{
         }
       }
 
+      moveList[j][0] = -1;
       return moveList;
     }
 }

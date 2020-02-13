@@ -12,24 +12,29 @@ public class Bishop extends ChessPiece{
       int j = 0;
 
       for(int i = 1; i < 8; i++){
-        if(x + i < 8){
+        if(x + i < 8 && (x + i >= 0) && (y + i < 8) && (y + i >= 0)){
           moveList[j][0] = x+i;
-          j++;
-        }
-        if(x + i < 8){
-          moveList[j][0] = x-i;
-          j++;
-        }
-        if(y + i < 8){
           moveList[j][1] = y+i;
           j++;
         }
-        if(y + i < 8){
+        if(x + i < 8 && (x + i >= 0) && (y - i < 8 && (y - i >= 0))){
+          moveList[j][0] = x+i;
+          moveList[j][1] = y-i;
+          j++;
+        }
+        if(x - i < 8 && (x - i >= 0) && (y + i < 8) && (y + i >= 0)){
+          moveList[j][0] = x-i;
+          moveList[j][1] = y+i;
+          j++;
+        }
+        if(y - i < 8 && (y - i >= 0) && (x - i < 8) && (x - i >= 0)){
+          moveList[j][0] = x-i;
           moveList[j][1] = y-i;
           j++;
         }
       }
 
+      moveList[j][0] = -1;
       return moveList;
     }
 }
