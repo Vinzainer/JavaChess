@@ -11,32 +11,47 @@ public class King extends ChessPiece{
       int y = super.position[1];
       int j = 0;
 
-      moveList[j][0] = x+1;
-      moveList[j][0] = y;
-      j++;
-      moveList[j][0] = x;
-      moveList[j][0] = y+1;
-      j++;
-      moveList[j][0] = x-1;
-      moveList[j][0] = y;
-      j++;
-      moveList[j][0] = x;
-      moveList[j][0] = y-1;
-      j++;
-      moveList[j][0] = x+1;
-      moveList[j][0] = y+1;
-      j++;
-      moveList[j][0] = x-1;
-      moveList[j][0] = y-1;
-      j++;
-      moveList[j][0] = x+1;
-      moveList[j][0] = y-1;
-      j++;
-      moveList[j][0] = x-1;
-      moveList[j][0] = y+1;
-      j++;
-
-      moveList[j][0]
+      if(x + 1 < 8){
+        moveList[j][0] = x+1;
+        moveList[j][1] = y;
+        j++;
+        if(y + 1 < 8){
+          moveList[j][0] = x+1;
+          moveList[j][1] = y+1;
+          j++;
+        }
+        if(y - 1 >= 0){
+          moveList[j][0] = x+1;
+          moveList[j][1] = y-1;
+          j++;
+        }
+      }
+      if(x - 1 >= 0){
+        moveList[j][0] = x-1;
+        moveList[j][1] = y;
+        j++;
+        if(y + 1 < 8){
+          moveList[j][0] = x-1;
+          moveList[j][1] = y+1;
+          j++;
+        }
+        if(y - 1 >= 0){
+          moveList[j][0] = x-1;
+          
+          j++;
+        }
+      }
+      if(y - 1 >= 0){
+        moveList[j][1] = x;
+        moveList[j][1] = y-1;
+        j++;
+      }
+      if(y + 1 < 8){
+        moveList[j][1] = x;
+        moveList[j][1] = y+1;
+        j++;
+      }
+      moveList[j][0] = -1;
 
       return moveList;
     }
