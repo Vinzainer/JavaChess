@@ -37,17 +37,17 @@ public class King extends ChessPiece{
         }
         if(y - 1 >= 0){
           moveList[j][0] = x-1;
-          
+          moveList[j][1] = y-1;
           j++;
         }
       }
       if(y - 1 >= 0){
-        moveList[j][1] = x;
+        moveList[j][0] = x;
         moveList[j][1] = y-1;
         j++;
       }
       if(y + 1 < 8){
-        moveList[j][1] = x;
+        moveList[j][0] = x;
         moveList[j][1] = y+1;
         j++;
       }
