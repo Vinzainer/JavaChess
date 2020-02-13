@@ -17,4 +17,5 @@ public abstract class ChessPiece{
         return color;
     }
 
+    public abstract int[] getMove(){};
 }
