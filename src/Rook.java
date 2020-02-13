@@ -1,9 +1,9 @@
 public class Rook extends ChessPiece{
 
 
-    public Rook(String color){
+    public Rook(String color, int posx, int posy){
         /* Constructor  String -> Rook */
-        super("Rook", color);
+        super("Rook", color, posx, posy);
     }
 
     public String toString(){
