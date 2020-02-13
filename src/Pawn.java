@@ -16,32 +16,22 @@ public class Pawn extends ChessPiece{
       int j = 0;
 
       if(super.color == "Black"){
+        moveList[j][0] = x + 1;
+        moveList[j][1] = y;
+        j++;
         if(x == 1){
-          moveList[j][0] = x;
-          moveList[j][1] = y+1;
-          j++;
-          moveList[j][0] = x;
-          moveList[j][1] = y+2;
-          j++;
-        }
-        else{
-          moveList[j][0] = x;
-          moveList[j][1] = y+1;
+          moveList[j][0] = x + 2;
+          moveList[j][1] = y;
           j++;
         }
       }
       else{
-        if(x == 6){
-          moveList[j][0] = x;
-          moveList[j][1] = y-1;
-          j++;
-          moveList[j][0] = x;
-          moveList[j][1] = y-2;
-          j++;
-        }
-        else{
-          moveList[j][0] = x;
-          moveList[j][1] = y+1;
+        moveList[j][0] = x - 1;
+        moveList[j][1] = y;
+          if(x == 6){
+            j++;
+            moveList[j][0] = x - 2;
+            moveList[j][1] = y;
           j++;
         }
       }
