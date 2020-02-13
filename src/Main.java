@@ -11,5 +11,8 @@ public class Main {
 
         System.out.println(b.toString());
 
+        System.out.println(b.getAt(2, 2).getPosition()[0]);
+        System.out.println(b.getAt(2, 2).getPosition()[1]);
+
     }
 }

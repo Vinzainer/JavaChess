@@ -84,8 +84,7 @@ public class ChessBoard {
         if(pieceX >= 8 || pieceX < 0 || pieceY >= 8 || pieceY < 0) return 0;    //out of range
         ChessPiece tmpPiece = board[pieceX][pieceY];                            
         if(tmpPiece == null) return 0;                                          //no piece at board[pieceX][pieceY]
-        if(tmpPiece.getColor() == board[posx][posy].getColor()) return 0;       //piece of same color
-
+        if(board[posx][posy] != null && tmpPiece.getColor() == board[posx][posy].getColor()) return 0;       //piece of same color
         board[posx][posy] = tmpPiece;
         board[pieceX][pieceY] = null;
         tmpPiece.setPosition(posx,posy);
