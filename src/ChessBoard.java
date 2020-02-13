@@ -78,4 +78,17 @@ public class ChessBoard {
         return board[posx][posy];
     }
 
+    public int movePiece(int pieceX, int pieceY, int posx, int posy){
+        /* int * int * int * int -> void */
+        if(posx >= 8 || posx < 0 || posy >= 8 || posy < 0) return 0;
+        if(pieceX >= 8 || pieceX < 0 || pieceY >= 8 || pieceY < 0) return 0;
+        ChessPiece tmpPiece = board[pieceX][pieceY];
+        if(tmpPiece == null) return 0;
+        
+        board[posx][posy] = tmpPiece;
+        board[pieceX][pieceY] = null;
+
+        return 1;
+    }
+
 }
