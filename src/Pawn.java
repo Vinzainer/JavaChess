@@ -5,4 +5,8 @@ public class Pawn extends ChessPiece{
         super("Pawn", color);
     }
 
+    public int[] getMove(){
+      
+    }
+
 }
