@@ -6,30 +6,59 @@ public class Knight extends ChessPiece{
     }
 
     public int[][] getMove(){
-      int[][] moveList = new int[64][2];
-      int x = super.position[0];
-      int y = super.position[1];
-      int j = 0;
-
-      for(int i = 1; i < 8; i++){
-        if(x + i < 8){
-          moveList[j][0] = x+i;
-          j++;
+        int[][] moveList = new int[64][2];
+        int x = super.position[0];
+        int y = super.position[1];
+        int j = 0;
+        if(x + 2 < 8 ){
+            if(y - 1 >= 0){
+                moveList[j][0] = x + 2;
+                moveList[j][1] = y - 1;
+                j++;
+            }
+            if(y + 1 < 8){
+                moveList[j][0] = x + 2;
+                moveList[j][1] = y + 1;
+                j++;
+            }
         }
-        if(x + i < 8){
-          moveList[j][0] = x-i;
-          j++;
+        if(x - 2 >= 0 ){
+            if(y + 1 < 8){
+                moveList[j][0] = x - 2;
+                moveList[j][1] = y + 1;
+                j++;
+            }
+            if(y - 1 >= 0){
+                moveList[j][0] = x - 2;
+                moveList[j][1] = y - 1;
+                j++;
+            }
         }
-        if(y + i < 8){
-          moveList[j][1] = y+i;
-          j++;
+        if(y + 2 < 8 ){
+            if(x - 1 >= 0){
+                moveList[j][0] = x - 1;
+                moveList[j][1] = y + 2;
+                j++;
+            }
+            if(x + 1 < 8){
+                moveList[j][0] = x + 1;
+                moveList[j][1] = y + 2;
+                j++;
+            }
         }
-        if(y + i < 8){
-          moveList[j][1] = y-i;
-          j++;
+        if(y - 2 >= 0 ){
+            if(x + 1 < 8){
+                moveList[j][0] = x + 1;
+                moveList[j][1] = y - 2;
+                j++;
+            }
+            if(x - 1 >= 0){
+                moveList[j][0] = x - 1;
+                moveList[j][1] = y - 2;
+                j++;
+            }   
         }
-      }
-
-      return moveList;
+        moveList[j][0] = -1;
+        return moveList;
     }
 }
