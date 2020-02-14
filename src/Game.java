@@ -14,46 +14,51 @@ public class Game{
     }
 
     public void nextMove(){
-      Scanner sc = new Scanner(System.in);
-      int x1,y1,x2,y2;
-      if(turnCpt % 2 == 0){
-        System.out.println("What is your next move ?");
-        x1 = sc.nextInt();
-        y1 = sc.nextInt();
-        x2 = sc.nextInt();
-        y2 = sc.nextInt();
+      	Scanner sc = new Scanner(System.in);
+      	int x1,y1,x2,y2;
+      	if(turnCpt % 2 == 0){
+        	System.out.println("What is your next move ?");
+        	x1 = sc.nextInt();
+        	y1 = sc.nextInt();
 
-        ChessPiece p = board.getAt(x1,y1);
-        if(p.getColor() == "White"){
-          int[][] moves = p.getMove();
-          int[][] realMoves = board.availableMoves(moves, p);
+          	ChessPiece p = board.getAt(x1,y1);
+        	if(p.getColor() == "White"){
+          		int[][] moves = p.getMove();
+          		int[][] realMoves = board.availableMoves(moves, p);
 
-          for(int[] move : moves){
-            if(move[0] == x2 && move[1] == y2){
-              board.movePiece(x1,y1,x2,y2);
-            }
-          }
-        }
-      }
-      else{
-        System.out.println("What is your next move ?");
-        x1 = sc.nextInt();
-        y1 = sc.nextInt();
-        x2 = sc.nextInt();
-        y2 = sc.nextInt();
+          		board.getAt(x1, y1).printMovesOnBoard(realMoves);;
 
-        ChessPiece p = board.getAt(x1,y1);
-        if(p.getColor() == "Black"){
-          int[][] moves = p.getMove();
-          int[][] realMoves = board.availableMoves(moves, p);
+          		x2 = sc.nextInt();
+          		y2 = sc.nextInt();
+          		for(int[] move : moves){
+            		if(move[0] == x2 && move[1] == y2){
+              			board.movePiece(x1,y1,x2,y2);
+            		}
+          		}
+        	}
+      	}
+      	else{
+        	System.out.println("What is your next move ?");
+        	x1 = sc.nextInt();
+        	y1 = sc.nextInt();
 
-          for(int[] move : moves){
-            if(move[0] == x2 && move[1] == y2){
-              board.movePiece(x1,y1,x2,y2);
-            }
-          }
-        }
-      }
+        	ChessPiece p = board.getAt(x1,y1);
+        	if(p.getColor() == "Black"){
+          		int[][] moves = p.getMove();
+				int[][] realMoves = board.availableMoves(moves, p);
+				  
+				board.getAt(x1, y1).printMovesOnBoard(realMoves);;
+
+				x2 = sc.nextInt();
+				y2 = sc.nextInt();
+
+          		for(int[] move : moves){
+            		if(move[0] == x2 && move[1] == y2){
+              		board.movePiece(x1,y1,x2,y2);
+            		}
+          		}
+        	}
+      	}
     }
 
     public void nextTurn(){
@@ -62,7 +67,7 @@ public class Game{
     }
 
     public ChessBoard getBoard(){
-      return board;
+      	return board;
     }
 
 }

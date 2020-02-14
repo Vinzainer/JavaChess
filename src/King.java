@@ -1,8 +1,10 @@
 public class King extends ChessPiece{
 
+	
+
     public King(String color, int posx, int posy){
         /* Constructor  String -> King */
-        super("King", color, posx, posy);
+		super("King", color, posx, posy);
     }
 
     public int[][] getMove(){
@@ -54,5 +56,10 @@ public class King extends ChessPiece{
       	moveList[j][0] = -1;
       	moveList[j][1] = -1;
       	return moveList;
-    }
+	}
+	
+	public boolean Castleable(){
+		return super.nbMove == 0;
+	}
+	
 }

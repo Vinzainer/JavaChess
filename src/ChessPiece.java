@@ -2,7 +2,8 @@ public abstract class ChessPiece{
 
     private String pieceName;
     protected String color;
-    protected int[] position;
+	protected int[] position;
+	protected int nbMove;
 
     public ChessPiece(String name, String color, int posx, int posy){
         /* Constructor  String * String -> ChessPiece */
@@ -10,7 +11,8 @@ public abstract class ChessPiece{
         this.color = color;
         position = new int[2];
         position[0] = posx;
-        position[1] = posy;
+		position[1] = posy;
+		nbMove = 0;
     }
 
     public String toString(){

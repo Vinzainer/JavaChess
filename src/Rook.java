@@ -1,5 +1,4 @@
-public class Rook extends ChessPiece{
-
+public class Rook extends ChessPiece implements Castleable{
 
     public Rook(String color, int posx, int posy){
         /* Constructor  String -> Rook */
@@ -43,5 +42,10 @@ public class Rook extends ChessPiece{
       	}
       	moveList[j][0] = -1;
       	return moveList;
-    }
+	}
+	
+	public boolean castleable(){
+		return super.nbMove == 0;
+	}
+	
 }
