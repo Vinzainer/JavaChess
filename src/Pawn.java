@@ -6,10 +6,13 @@ public class Pawn extends ChessPiece{
     }
 
     public String toString(){
+        /* void -> String */
         return super.toString();
     }
 
     public int[][] getMove(){
+      /* void -> int[][]
+         get the list of potential move for a piece */
       int[][] moveList = new int[64][2];
       int x = super.position[0];
       int y = super.position[1];

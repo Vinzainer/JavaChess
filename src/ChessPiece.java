@@ -14,23 +14,32 @@ public abstract class ChessPiece{
     }
 
     public String toString(){
+		/* void -> String */
         return pieceName;
     }
 
     public String getColor(){
+		/* void -> String 
+		   get-er for Color */
         return color;
     }
 
     public void setPosition(int posx, int posy){
+		/* int * int -> void 
+		set-er for Position */
       	position[0] = posx;
       	position[1] = posy;
     }
 
     public int[] getPosition(){
+		/* void -> int[] 
+		get-er for Position */
       return position;
     }
 
     private boolean inMoves(int x, int y, int[][] moves){
+		/* int * int * int[][] -> boolean 
+		takes a move in 2 int and return true if it's in moves */
         int i = 0;
         while(moves[i][0] != -1){
 			if(moves[i][0] == x && moves[i][1] == y){
@@ -43,6 +52,8 @@ public abstract class ChessPiece{
     }
 
     public void printMovesOnBoard(int[][] moves){
+		/* int[][] -> void 
+		   std output : shows the moves in a more visual way */
       	String str = "";
       	for(int i = 0; i < 8; i++){
 		    str += "\n|";

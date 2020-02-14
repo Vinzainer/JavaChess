@@ -6,6 +6,8 @@ public class Knight extends ChessPiece{
     }
 
     public int[][] getMove(){
+        /* void -> int[][]
+           get the list of potential move for a piece */
         int[][] moveList = new int[64][2];
         int x = super.position[0];
         int y = super.position[1];

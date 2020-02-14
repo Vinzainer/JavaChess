@@ -79,7 +79,9 @@ public class ChessBoard {
     }
 
     public int movePiece(int pieceX, int pieceY, int posx, int posy){
-        /* int * int * int * int -> void */
+        /* int * int * int * int -> void 
+           move the piece at point 1 to point 2 
+           point 1 becomes null after */
         if(posx >= 8 || posx < 0 || posy >= 8 || posy < 0) return 0;            //out of range
         if(pieceX >= 8 || pieceX < 0 || pieceY >= 8 || pieceY < 0) return 0;    //out of range
         ChessPiece tmpPiece = board[pieceX][pieceY];                            
@@ -93,40 +95,123 @@ public class ChessBoard {
     }
 
     private boolean vertEmpty(int x1, int y1, int x2, int y2){
+        /* int * int * int * int -> boolean
+        utility function: check if the vertical line are empty between 2 points
+        return true if empty and the second point is either null or of the opposite color */
+        ChessPiece movingPiece = board[x1][y1];
 
-        // c'est la merde ici
-        
         int dx = x1 - x2;
         int dy = y1 - y2;
 
-        if(dx != 0){
-            if(dx < 0){
-                for(int i = x1 + 1; i < x2; i++){
-                    if(board[i][y1] != null && board[i][y1].getColor() == board[x1][y1].getColor()) return false;
+        if(dx < 0){
+            for(int i = x1 + 1; i <= x2; i++){
+                ChessPiece tmpPiece = board[i][y1];
+                if(i == x2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
                 }
             }
-            else{
-                for(int i = x1 - 1; i > x2 - 1; i--){
-                    if(board[i][y1] != null && board[i][y1].getColor() == board[x1][y1].getColor()) return false;
+        }
+        else if(dx > 0){
+            for(int i = x1 - 1; i >= x2; i--){
+                ChessPiece tmpPiece = board[i][y1];
+                if(i == x2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
+                }
+            }
+        }
+        else if(dy < 0){
+            for(int i = y1 + 1; i <= y2; i++){
+                ChessPiece tmpPiece = board[x1][i];
+                if(i == y2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
                 }
             }
         }
         else{
-            if(dy < 0){
-                for(int i = y1 + 1; i < y2; i++ ){
-                    if(board[x1][i] != null && board[x1][i].getColor() == board[x1][y1].getColor()) return false;
+            for(int i = y1 - 1; i >= y2; i--){
+                ChessPiece tmpPiece = board[x1][i];
+                if(i == y2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
                 }
             }
-            else{
-                for(int i = y1 - 1; i > y2 -1; i--){
-                    if(board[x1][i] != null && board[x1][i].getColor() == board[x1][y1].getColor()) return false;
-                }
-            } 
         }
+
+        return true;
+    }
+
+    private boolean crossEmpty(int x1, int y1, int x2, int y2){
+        /* int * int * int * int -> boolean
+            utility function: check if the cross line are empty between 2 points
+            return true if empty and the second point is either null or of the opposite color */
+        ChessPiece movingPiece = board[x1][y1];
+
+        int dx = x1 - x2;
+        int dy = y1 - y2;
+
+        if(dx < 0 && dy < 0){
+            for(int i = x1 + 1, j = y1 + 1; i <= x2; i++,j++){
+                ChessPiece tmpPiece = board[i][j];
+                if(i == x2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
+                }
+            }
+        }
+        else if(dx < 0 && dy > 0){
+            for(int i = x1 + 1, j = y1 - 1; i <= x2; i++,j--){
+                ChessPiece tmpPiece = board[i][j];
+                if(i == x2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
+                }
+            }
+        }        
+        else if(dx > 0 && dy < 0){
+            for(int i = x1 - 1, j = y1 + 1; i >= x2; i--,j++){
+                ChessPiece tmpPiece = board[i][j];
+                if(i == x2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
+                }
+            }
+        }        
+        else if(dx > 0 && dy > 0){
+            for(int i = x1 - 1, j = y1 - 1; i >= x2; i--,j--){
+                ChessPiece tmpPiece = board[i][j];
+                if(i == x2 && tmpPiece != null && tmpPiece.getColor() != movingPiece.getColor()){
+                    return true;
+                }
+                if(tmpPiece != null){
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 
     public int[][] availableMoves(int[][] moves, ChessPiece piece){
+        /* int[][] * ChessPiece -> int[][]
+           change move to only the legal moves available and adds other special moves for some pieces if available
+            */
         int[][] aMoves = new int[64][2];
         int pieceX = piece.getPosition()[0];
         int pieceY = piece.getPosition()[1];
@@ -155,8 +240,96 @@ public class ChessBoard {
 
             }
         }
+        else if(piece instanceof Bishop){
+            for(int[] move : moves){
+                if(move[0] == -1) break;
+                    int x = move[0];
+                    int y = move[1];
+                    
+                    if(crossEmpty(pieceX, pieceY, x, y)){
+                        aMoves[j] = move;
+                        j++;
+                    }
+
+            }
+        }
+        else if( piece instanceof Queen){
+            for(int[] move : moves){
+                if(move[0] == -1) break;
+                int x = move[0];
+                int y = move[1];
+                if(x != piece.getPosition()[0] && y != piece.getPosition()[1]){
+                    if(crossEmpty(pieceX, pieceY, x, y)){
+                        aMoves[j] = move;
+                        j++;
+                    }
+                }
+                else{
+                    if(vertEmpty(pieceX, pieceY, x, y)){
+                        aMoves[j] = move;
+                        j++;
+                    }
+                }
+            }
+        }
+        else if( piece instanceof Pawn){
+            for(int[] move : moves){
+                if(move[0] == -1) break;
+                int y = move[1];
+                int x = move[0];
+                if(board[x][y] == null){
+                    aMoves[j] = move;
+                    j++;
+                }
+            }
+
+            if(piece.getColor() == "White"){
+                if(pieceX - 1 >= 0){
+                    if(pieceY -1 >= 0){
+                        if(board[pieceX - 1][pieceY - 1] != null && board[pieceX - 1][pieceY - 1].getColor() != "White"){
+                            int[] nmove = new int[2];
+                            nmove[0] = pieceX - 1;
+                            nmove[1] = pieceY - 1;
+                            aMoves[j] = nmove;
+                            j++;
+                        }
+                    }
+                    if(pieceY + 1 < 8){
+                        if(board[pieceX -1][pieceY + 1] != null && board[pieceX - 1][pieceY + 1].getColor() != "White"){
+                            int[] nmove = new int[2];
+                            nmove[0] = pieceX - 1;
+                            nmove[1] = pieceY + 1;
+                            aMoves[j] = nmove;
+                            j++;
+                        }
+                    }
+                }
+            }
+            else{
+                if(pieceX + 1 < 8){
+                    if(pieceY - 1 >= 0){
+                        if(board[pieceX + 1][pieceY - 1] != null && board[pieceX + 1][pieceY - 1].getColor() != "Black"){
+                            int[] nmove = new int[2];
+                            nmove[0] = pieceX + 1;
+                            nmove[1] = pieceY - 1;
+                            aMoves[j] = nmove;
+                            j++;
+                        }
+                    }
+                    if(pieceY + 1 < 8){
+                        if(board[pieceX + 1][pieceY + 1] != null && board[pieceX + 1][pieceY + 1].getColor() != "Black"){
+                            System.out.println(pieceX + " " + pieceY);
+                            int[] nmove = new int[2];
+                            nmove[0] = pieceX + 1;
+                            nmove[1] = pieceY + 1;
+                            aMoves[j] = nmove;
+                            j++;
+                        }
+                    }
+                }
+            }
+        }
         aMoves[j][0] = -1;
         return aMoves;
     }
-
 }
