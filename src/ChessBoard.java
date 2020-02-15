@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class ChessBoard {
 
     private ChessPiece[][] board;
@@ -90,9 +92,72 @@ public class ChessBoard {
         board[posx][posy] = tmpPiece;
         board[pieceX][pieceY] = null;
         tmpPiece.setPosition(posx,posy);
+        board[posx][posy].addMove();
 
         return 1;
     }
+
+    private boolean castle(ChessPiece piece1, ChessPiece piece2){
+        int xr;
+        int yr;
+        int xk;
+        int yk;
+        String color = piece1.getColor();
+        ChessPiece rook, king;
+        if(color != piece2.getColor()){
+            return false;
+        }
+
+        if(piece1 instanceof Rook){
+            rook = piece1;
+            xr = piece1.getPosition()[0];
+            yr = piece1.getPosition()[1];
+            king = piece2;
+            xk = piece2.getPosition()[0];
+            yk = piece2.getPosition()[1];
+        }
+        else{
+            rook = piece2;
+            xr = piece2.getPosition()[0];
+            yr = piece2.getPosition()[1];
+            king = piece1;
+            xk = piece1.getPosition()[0];
+            yk = piece1.getPosition()[1];
+        }
+
+        if(xr != xk){
+            return false;
+        }
+
+        //big castle
+        if(yr == 0){
+            movePiece(xr, yr, xr, 3);
+            movePiece(xk, yk, xk, 2);
+        }
+        //small castle
+        else{
+            movePiece(xr, yr, xr, 5);
+            movePiece(xk, yk, xk, 6);
+        }
+        return true;
+    }
+
+    public boolean makeMove(int x1, int y1, int x2, int y2){
+        ChessPiece piece = board[x1][y1];
+        if(piece instanceof King){
+            if(Math.abs(y1 - y2) >= 2){
+                if(y1 - y2 < 0){
+                    castle(piece, board[x1][7]);
+                }
+                else castle(piece, board[x1][0]);
+            }
+        }
+        else{
+            movePiece(x1, y1, x2, y2);
+        }
+        return true;
+    }
+
 
     private boolean vertEmpty(int x1, int y1, int x2, int y2){
         /* int * int * int * int -> boolean
@@ -228,7 +293,6 @@ public class ChessBoard {
             }
         }
         else if(piece instanceof King){
-            System.out.println("inKing");
             King tmpKing = (King)piece; // Should always be a king
             if(tmpKing.getColor() == "Black"){
                 ChessPiece tmpPiece = board[0][0];
@@ -251,11 +315,9 @@ public class ChessBoard {
                 }
             }
             else{
-                System.out.println("caseWhite");
                 ChessPiece tmpPiece = board[7][0];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
-                    System.out.println(tmpKing.Castleable() + " " + tmpRook.castleable());
                     if(tmpRook.castleable() && tmpKing.Castleable() && vertEmpty(pieceX, pieceY, 7, 1)){
                         int[] nMove = {7,1};
                         aMoves[j] = nMove;
@@ -265,7 +327,6 @@ public class ChessBoard {
                 tmpPiece = board[0][7];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
-                    System.out.println(tmpKing.Castleable() + " " + tmpRook.castleable());
                     if(tmpRook.castleable() && tmpKing.Castleable() && vertEmpty(pieceX, pieceY, 7, 6)){
                         int[] nMove = {7,6};
                         aMoves[j] = nMove;
@@ -375,7 +436,6 @@ public class ChessBoard {
                     }
                     if(pieceY + 1 < 8){
                         if(board[pieceX + 1][pieceY + 1] != null && board[pieceX + 1][pieceY + 1].getColor() != "Black"){
-                            System.out.println(pieceX + " " + pieceY);
                             int[] nmove = new int[2];
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY + 1;
