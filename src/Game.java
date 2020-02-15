@@ -30,9 +30,9 @@ public class Game{
 
           		x2 = sc.nextInt();
           		y2 = sc.nextInt();
-          		for(int[] move : moves){
+          		for(int[] move : realMoves){
             		if(move[0] == x2 && move[1] == y2){
-              			board.movePiece(x1,y1,x2,y2);
+              			board.makeMove(x1,y1,x2,y2);
             		}
           		}
         	}
@@ -52,9 +52,9 @@ public class Game{
 				x2 = sc.nextInt();
 				y2 = sc.nextInt();
 
-          		for(int[] move : moves){
+          		for(int[] move : realMoves){
             		if(move[0] == x2 && move[1] == y2){
-              		board.movePiece(x1,y1,x2,y2);
+              		board.makeMove(x1,y1,x2,y2);
             		}
           		}
         	}
