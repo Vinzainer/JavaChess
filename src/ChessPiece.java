@@ -26,6 +26,10 @@ public abstract class ChessPiece{
         return color;
     }
 
+	public void addMove(){
+		nbMove++;
+	}
+
     public void setPosition(int posx, int posy){
 		/* int * int -> void 
 		set-er for Position */
