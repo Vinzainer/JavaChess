@@ -522,6 +522,19 @@ public class ChessBoard {
         return nMoves;
     }
 
+    public boolean checkMate(String color){
+        for(ChessPiece[] line : board){
+            for(ChessPiece piece : line){
+                if(piece != null && piece.getColor() != color){
+                    if(availableMoves(piece.getMove(), piece)[0][0] != -1){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public ChessPiece getKing(String color){
         for(ChessPiece[] line : board){
             for(ChessPiece piece : line){
