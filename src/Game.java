@@ -42,7 +42,7 @@ public class Game{
 		}
 		else color = "Black";
 		while(!endTurn){
-			System.out.println("Chose a piece :\n");
+			System.out.println("\nChose a piece :");
 			System.out.print("number : ");
 			x1 = sc.nextInt() - 1;
 			sc.nextLine();
