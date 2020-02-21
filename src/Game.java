@@ -88,12 +88,15 @@ public class Game{
 				System.out.println("Selected move is not available");
 				continue;
 			}
-
 			board.makeMove(x1, y1, x2, y2);
 
-
+			
 		}
     }
+
+	public boolean winChecker(String color){
+		return board.checkMate(color);
+	}
 
     public void nextTurn(){
 		/* void -> void

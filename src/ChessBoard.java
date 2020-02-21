@@ -196,13 +196,11 @@ public class ChessBoard {
 
     public boolean makeMove(int x1, int y1, int x2, int y2){
         ChessPiece piece = board[x1][y1];
-        if(piece instanceof King){
-            if(Math.abs(y1 - y2) >= 2){
-                if(y1 - y2 < 0){
-                    castle(piece, board[x1][7]);
-                }
-                else castle(piece, board[x1][0]);
+        if(piece instanceof King && Math.abs(y1 - y2) >= 2){
+            if(y1 - y2 < 0){
+                castle(piece, board[x1][7]);
             }
+            else castle(piece, board[x1][0]);      
         }
         else{
             movePiece(x1, y1, x2, y2);
