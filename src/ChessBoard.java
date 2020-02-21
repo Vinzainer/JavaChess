@@ -527,12 +527,12 @@ public class ChessBoard {
             for(ChessPiece piece : line){
                 if(piece != null && piece.getColor() != color){
                     if(availableMoves(piece.getMove(), piece)[0][0] != -1){
-                        return true;
+                        return false;
                     }
                 }
             }
         }
-        return false;
+        return true;
     }
 
     public ChessPiece getKing(String color){
