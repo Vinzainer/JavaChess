@@ -29,6 +29,7 @@ public abstract class ChessPiece{
 	public void addMove(){
 		nbMove++;
 	}
+	
 
     public void setPosition(int posx, int posy){
 		/* int * int -> void 
@@ -60,9 +61,10 @@ public abstract class ChessPiece{
     public void printMovesOnBoard(int[][] moves){
 		/* int[][] -> void 
 		   std output : shows the moves in a more visual way */
-      	String str = "";
+		System.out.println(position[0] + " " + position[1]);
+      	String str = "  | A | B | C | D | E | F | G | H |";
       	for(int i = 0; i < 8; i++){
-		    str += "\n|";
+		    str += "\n" + (i + 1) + " |";
         	for(int j = 0; j < 8; j++){
 				if(position[0] == i && position[1] == j){
 					str += " P |"; 

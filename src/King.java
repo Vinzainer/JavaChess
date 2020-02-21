@@ -1,4 +1,4 @@
-public class King extends ChessPiece{
+public class King extends ChessPiece implements Castleable{
 
 	
 
@@ -58,7 +58,7 @@ public class King extends ChessPiece{
       	return moveList;
 	}
 	
-	public boolean Castleable(){
+	public boolean castleable(){
 		return super.nbMove == 0;
 	}
 	

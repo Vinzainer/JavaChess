@@ -40,11 +40,59 @@ public class ChessBoard {
 
     }
 
+    public boolean checkChecker(ChessPiece king , int[][] moves ){
+
+        for(int[] move : moves){
+            if(king.getPosition() == move){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ChessBoard(ChessBoard chessBoard){
+        ChessPiece[][] tmp = new ChessPiece[8][8];
+        ChessPiece piece = null;
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                piece = chessBoard.getAt(i,j);
+                if(piece == null){
+                    tmp[i][j] = null;
+                }
+                else{
+                    if(piece instanceof King){
+                        tmp[i][j] = new King(piece.getColor(), i, j);
+                    }
+                    else if(piece instanceof Queen){
+                        tmp[i][j] = new Queen(piece.getColor(), i, j);
+                    }
+                    else if(piece instanceof Rook){
+                        tmp[i][j] = new Rook(piece.getColor(), i, j);
+                    }
+                    else if(piece instanceof Bishop){
+                        tmp[i][j] = new Bishop(piece.getColor(), i, j);
+                    }
+                    else if(piece instanceof Knight){
+                        tmp[i][j] = new Knight(piece.getColor(), i, j);
+                    }
+                    else if(piece instanceof Pawn){
+                        tmp[i][j] = new Pawn(piece.getColor(), i, j);
+                    }
+                }
+            }
+        }
+        board = tmp;
+    }
+
+    private char intToChar(int i){
+        return (char)(i + 65);
+    }
+
     public String toString(){
         /* this -> String */
-        String str = "";
+        String str = "  | A | B | C | D | E | F | G | H |";
         for (int i = 0; i < 8; i++){
-            str += "\n|";
+            str += "\n" + (i + 1) + " |";
             for (int j = 0; j < 8; j++){
                 if (board[i][j] == null){
                     str += " + |";
@@ -78,6 +126,10 @@ public class ChessBoard {
         /* int * int -> ChessPiece
            get-er for Board */
         return board[posx][posy];
+    }
+
+    public ChessPiece[][] getBoard(){
+        return board;
     }
 
     public int movePiece(int pieceX, int pieceY, int posx, int posy){
@@ -298,7 +350,8 @@ public class ChessBoard {
                 ChessPiece tmpPiece = board[0][0];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.Castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
+                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
+                        
                         int[] nMove = {0,1};
                         aMoves[j] = nMove;
                         j++;
@@ -307,7 +360,7 @@ public class ChessBoard {
                 tmpPiece = board[0][7];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.Castleable() && vertEmpty(pieceX, pieceY, 0, 6)){
+                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 6)){
                         int[] nMove = {0,6};
                         aMoves[j] = nMove;
                         j++;
@@ -318,7 +371,8 @@ public class ChessBoard {
                 ChessPiece tmpPiece = board[7][0];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.Castleable() && vertEmpty(pieceX, pieceY, 7, 1)){
+                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 1)){
+
                         int[] nMove = {7,1};
                         aMoves[j] = nMove;
                         j++;
@@ -327,7 +381,7 @@ public class ChessBoard {
                 tmpPiece = board[0][7];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.Castleable() && vertEmpty(pieceX, pieceY, 7, 6)){
+                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 6)){
                         int[] nMove = {7,6};
                         aMoves[j] = nMove;
                         j++;
@@ -348,26 +402,26 @@ public class ChessBoard {
         else if(piece instanceof Rook){
             for(int[] move : moves){
                 if(move[0] == -1) break;
-                    int x = move[0];
-                    int y = move[1];
-                    
-                    if(vertEmpty(pieceX, pieceY, x, y)){
-                        aMoves[j] = move;
-                        j++;
-                    }
+                int x = move[0];
+                int y = move[1];
+              	
+                if(vertEmpty(pieceX, pieceY, x, y)){
+                    aMoves[j] = move;
+                    j++; 
+                }
 
             }
         }
         else if(piece instanceof Bishop){
             for(int[] move : moves){
                 if(move[0] == -1) break;
-                    int x = move[0];
-                    int y = move[1];
-                    
-                    if(crossEmpty(pieceX, pieceY, x, y)){
-                        aMoves[j] = move;
-                        j++;
-                    }
+                int x = move[0];
+                int y = move[1];
+                
+                if(crossEmpty(pieceX, pieceY, x, y)){
+                    aMoves[j] = move;
+                    j++; 
+                }
 
             }
         }
@@ -379,13 +433,13 @@ public class ChessBoard {
                 if(x != piece.getPosition()[0] && y != piece.getPosition()[1]){
                     if(crossEmpty(pieceX, pieceY, x, y)){
                         aMoves[j] = move;
-                        j++;
+                        j++; 
                     }
                 }
                 else{
                     if(vertEmpty(pieceX, pieceY, x, y)){
                         aMoves[j] = move;
-                        j++;
+                        j++; 
                     }
                 }
             }
@@ -397,7 +451,7 @@ public class ChessBoard {
                 int x = move[0];
                 if(board[x][y] == null){
                     aMoves[j] = move;
-                    j++;
+                    j++; 
                 }
             }
 
@@ -409,7 +463,7 @@ public class ChessBoard {
                             nmove[0] = pieceX - 1;
                             nmove[1] = pieceY - 1;
                             aMoves[j] = nmove;
-                            j++;
+                            j++; 
                         }
                     }
                     if(pieceY + 1 < 8){
@@ -418,7 +472,7 @@ public class ChessBoard {
                             nmove[0] = pieceX - 1;
                             nmove[1] = pieceY + 1;
                             aMoves[j] = nmove;
-                            j++;
+                            j++; 
                         }
                     }
                 }
@@ -431,7 +485,7 @@ public class ChessBoard {
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY - 1;
                             aMoves[j] = nmove;
-                            j++;
+                            j++; 
                         }
                     }
                     if(pieceY + 1 < 8){
@@ -440,13 +494,43 @@ public class ChessBoard {
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY + 1;
                             aMoves[j] = nmove;
-                            j++;
+                            j++;    
                         }
                     }
                 }
             }
         }
         aMoves[j][0] = -1;
-        return aMoves;
+        int[][] nMoves = new int[64][2];
+        ChessBoard boardCopy;;
+        ChessPiece king;
+        int i = 0;
+        for(int[] move : aMoves){
+            if(move[0] == -1) break;
+            boardCopy = new ChessBoard(this);
+            boardCopy.makeMove(pieceX, pieceY, move[0], move[1]);
+            //System.out.println(toString());
+            //System.out.println(boardCopy.toString());
+            //System.out.println(toString());
+            king = getKing(piece.getColor());
+            if(!checkChecker(king, aMoves)){
+                nMoves[i] = move;
+                i++; 
+            }
+        }
+        nMoves[i][0] = -1;
+        return nMoves;
     }
+
+    public ChessPiece getKing(String color){
+        for(ChessPiece[] line : board){
+            for(ChessPiece piece : line){
+                if(piece instanceof King && piece.getColor() == color){
+                    return piece;
+                }
+            }
+        }
+        return null;
+    }
+
 }

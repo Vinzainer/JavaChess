@@ -4,8 +4,9 @@ public class Main {
 
       for(int i = 0; i < 100; i++){
         System.out.println(test.getBoard());
-        test.nextMove();
+		test.nextMove();
+		//System.out.println(test.getBoard().checkChecker("White"));
         test.nextTurn();
-      }
+        }
     }
 }
