@@ -86,6 +86,9 @@ public class ChessBoard {
         board = tmp;
     }
 
+    private char intToChar(int i){
+        return (char)(i + 65);
+    }
 
     public String toString(){
         /* this -> String */
@@ -162,19 +165,19 @@ public class ChessBoard {
 
         if(piece1 instanceof Rook){
             rook = piece1;
-            xr = rook.getPosition()[0];
-            yr = rook.getPosition()[1];
+            xr = piece1.getPosition()[0];
+            yr = piece1.getPosition()[1];
             king = piece2;
-            xk = king.getPosition()[0];
-            yk = king.getPosition()[1];
+            xk = piece2.getPosition()[0];
+            yk = piece2.getPosition()[1];
         }
         else{
             rook = piece2;
-            xr = rook.getPosition()[0];
-            yr = rook.getPosition()[1];
+            xr = piece2.getPosition()[0];
+            yr = piece2.getPosition()[1];
             king = piece1;
-            xk = king.getPosition()[0];
-            yk = king.getPosition()[1];
+            xk = piece1.getPosition()[0];
+            yk = piece1.getPosition()[1];
         }
 
         if(xr != xk){
@@ -352,22 +355,19 @@ public class ChessBoard {
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
                     if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
-                        if(!inCheck(new King("Black",0,3)) && !inCheck(new King("Black",0,2))){
-                            int[] nMove = {0,2};
-                            aMoves[j] = nMove;
-                            j++;
-                        }
+
+                        int[] nMove = {0,1};
+                        aMoves[j] = nMove;
+                        j++;
                     }
                 }
                 tmpPiece = board[0][7];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
                     if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 6)){
-                        if(!inCheck(new King("Black",0,6)) && !inCheck(new King("Black",0,5))){
-                            int[] nMove = {0,6};
-                            aMoves[j] = nMove;
-                            j++;
-                        }
+                        int[] nMove = {0,6};
+                        aMoves[j] = nMove;
+                        j++;
                     }
                 }
             }
@@ -376,22 +376,19 @@ public class ChessBoard {
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
                     if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 1)){
-                        if(!inCheck(new King("White",7,2)) && !inCheck(new King("White",7,3))){
-                            int[] nMove = {7,2};
-                            aMoves[j] = nMove;
-                            j++;
-                        }
+
+                        int[] nMove = {7,1};
+                        aMoves[j] = nMove;
+                        j++;
                     }
                 }
                 tmpPiece = board[0][7];
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
                     if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 6)){
-                        if(!inCheck(new King("Black",7,6)) && !inCheck(new King("Black",7,5))){
-                            int[] nMove = {7,6};
-                            aMoves[j] = nMove;
-                            j++;
-                        }
+                        int[] nMove = {7,6};
+                        aMoves[j] = nMove;
+                        j++;
                     }
                 }
             }
@@ -527,14 +524,24 @@ public class ChessBoard {
         return aMoves;
     }
 
-    public boolean checkMate(String color){
-        for(ChessPiece[] line : board){
-            for(ChessPiece piece : line){
-                if(piece != null && piece.getColor() != color){
-                    if(availableMoves(piece.getMove(), piece, false)[0][0] != -1){
-                        return false;
-                    }
-                }
+    public int[][] tmp(String color, int[][] moves, boolean stop){
+        int[][] res = new int[64][2];
+
+        for(int[] move : moves){
+
+        }
+
+        return res;
+    }
+
+    public boolean checkMate(ChessPiece king){
+        int[][] move = availableMoves(king.getMove(), king, true);
+        for(int[] m : move){
+            ChessBoard tmpBoard = new ChessBoard(this);
+            tmpBoard.setAt(king, m[0], m[1]);
+
+            if(tmpBoard.inCheck(king) != true){
+                return false;
             }
         }
         return true;
