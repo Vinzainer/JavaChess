@@ -21,7 +21,7 @@ public abstract class ChessPiece{
     }
 
     public String getColor(){
-		/* void -> String 
+		/* void -> String
 		   get-er for Color */
         return color;
     }
@@ -29,23 +29,23 @@ public abstract class ChessPiece{
 	public void addMove(){
 		nbMove++;
 	}
-	
+
 
     public void setPosition(int posx, int posy){
-		/* int * int -> void 
+		/* int * int -> void
 		set-er for Position */
       	position[0] = posx;
       	position[1] = posy;
     }
 
     public int[] getPosition(){
-		/* void -> int[] 
+		/* void -> int[]
 		get-er for Position */
       return position;
     }
 
     private boolean inMoves(int x, int y, int[][] moves){
-		/* int * int * int[][] -> boolean 
+		/* int * int * int[][] -> boolean
 		takes a move in 2 int and return true if it's in moves */
         int i = 0;
         while(moves[i][0] != -1){
@@ -59,7 +59,7 @@ public abstract class ChessPiece{
     }
 
     public void printMovesOnBoard(int[][] moves){
-		/* int[][] -> void 
+		/* int[][] -> void
 		   std output : shows the moves in a more visual way */
 		System.out.println(position[0] + " " + position[1]);
       	String str = "  | A | B | C | D | E | F | G | H |";
@@ -67,7 +67,7 @@ public abstract class ChessPiece{
 		    str += "\n" + (i + 1) + " |";
         	for(int j = 0; j < 8; j++){
 				if(position[0] == i && position[1] == j){
-					str += " P |"; 
+					str += " P |";
 				}
 
           		else if(inMoves(i, j, moves)){

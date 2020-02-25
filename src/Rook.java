@@ -43,9 +43,9 @@ public class Rook extends ChessPiece implements Castleable{
       	moveList[j][0] = -1;
       	return moveList;
 	}
-	
+
 	public boolean castleable(){
 		return super.nbMove == 0;
 	}
-	
+
 }
