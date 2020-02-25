@@ -16,15 +16,18 @@ public class Main {
             color = "Black";
             en_color = "White";
         }
-        if(test.winChecker(color)){
-            test.getBoard().toString();
-            System.out.println(color + " wins");
-            break;
-        }
+
         ChessBoard board = test.getBoard();
         ChessPiece king = board.getKing(en_color);
 
-        System.out.println("Check " + en_color + " : " + board.inCheck(king));
+        if(test.winChecker(king)){
+            System.out.println(test.getBoard().toString());
+            System.out.println(color + " wins");
+            break;
+        }
+        else if(board.inCheck(king)){
+            System.out.println("\nCHECK !");
+        }
         test.nextTurn();
         }
     }

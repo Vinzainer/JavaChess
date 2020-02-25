@@ -61,8 +61,8 @@ public abstract class ChessPiece{
     public void printMovesOnBoard(int[][] moves){
 		/* int[][] -> void
 		   std output : shows the moves in a more visual way */
-		System.out.println(position[0] + " " + position[1]);
-      	String str = "  | A | B | C | D | E | F | G | H |";
+        String str = "\n";
+      	str += "  | A | B | C | D | E | F | G | H |";
       	for(int i = 0; i < 8; i++){
 		    str += "\n" + (i + 1) + " |";
         	for(int j = 0; j < 8; j++){
@@ -78,7 +78,7 @@ public abstract class ChessPiece{
 				}
         	}
 		}
-		System.out.println(str);
+		System.out.println(str + "\n");
     }
 
     public abstract int[][] getMove();

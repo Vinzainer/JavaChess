@@ -92,7 +92,8 @@ public class ChessBoard {
 
     public String toString(){
         /* this -> String */
-        String str = "  | A | B | C | D | E | F | G | H |";
+        String str = "\n";
+        str += "  | A | B | C | D | E | F | G | H |";
         for (int i = 0; i < 8; i++){
             str += "\n" + (i + 1) + " |";
             for (int j = 0; j < 8; j++){
@@ -104,7 +105,7 @@ public class ChessBoard {
                 }
             }
         }
-        return str;
+        return str += "\n";
     }
 
     public int setAt(ChessPiece piece ,int posx ,int posy){
@@ -533,14 +534,14 @@ public class ChessBoard {
         return res;
     }
 
-    public boolean checkMate(String color){
-        for(ChessPiece[] line : board){
-            for(ChessPiece piece : line){
-                if(piece != null && piece.getColor() != color){
-                    if(availableMoves(piece.getMove(), piece, false)[0][0] != -1){
-                        return false;
-                    }
-                }
+    public boolean checkMate(ChessPiece king){
+        int[][] move = availableMoves(king.getMove(), king, true);
+        for(int[] m : move){
+            ChessBoard tmpBoard = new ChessBoard(this);
+            tmpBoard.setAt(king, m[0], m[1]);
+
+            if(tmpBoard.inCheck(king) != true){
+                return false;
             }
         }
         return true;

@@ -43,15 +43,15 @@ public class Game{
 		else color = "Black";
         System.out.println(color + " are on ! ");
 		while(!endTurn){
-			System.out.println("\nChose a piece :");
-            System.out.print("number : ");
+			System.out.println("\nChoose a piece :");
+            System.out.print("Line number : ");
     		x1 = sc.nextInt() - 1;
     		sc.nextLine();
             if(x1 < 0 || x1 > 7){
                 System.out.println("Out of board.");
                 continue;
             }
-			System.out.print("letter : ");
+			System.out.print("Line letter : ");
 			y1 = letterToInt(sc.nextLine());
             if(y1 < 0 || y1 > 7){
                 System.out.println("Out of board.");
@@ -76,11 +76,11 @@ public class Game{
 				continue;
 			}
 
-			System.out.println("Chose a move : ");
-			System.out.print("number : ");
+			System.out.println("Choose a move : ");
+			System.out.print("Line number : ");
 			x2 = sc.nextInt() - 1;
 			sc.nextLine();
-			System.out.print("letter : ");
+			System.out.print("Line letter : ");
 			y2 = letterToInt(sc.nextLine());
 
 			int i = 0;
@@ -101,8 +101,8 @@ public class Game{
 		}
     }
 
-	public boolean winChecker(String color){
-		return board.checkMate(color);
+	public boolean winChecker(ChessPiece king){
+		return board.checkMate(king);
 	}
 
     public void nextTurn(){
