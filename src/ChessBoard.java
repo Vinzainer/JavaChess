@@ -324,7 +324,7 @@ public class ChessBoard {
         return true;
     }
 
-    public int[][] availableMoves(int[][] moves, ChessPiece piece){
+    public int[][] availableMoves(int[][] moves, ChessPiece piece, boolean checkChecker){
         /* int[][] * ChessPiece -> int[][]
            change move to only the legal moves available and adds other special moves for some pieces if available
             */
@@ -500,6 +500,22 @@ public class ChessBoard {
             }
         }
         aMoves[j][0] = -1;
+        if(checkChecker){
+            int[][] fMoves = new int[64][2];
+            ChessBoard boardCopy;
+            int i = 0;
+            for(int[] move : aMoves){
+                if(move[0] == -1) break;
+                boardCopy = new ChessBoard(this);
+                boardCopy.makeMove(pieceX, pieceY, move[0], move[1]);
+                if(!boardCopy.inCheck(boardCopy.getKing(piece.getColor()))){
+                    fMoves[i] = move;
+                }
+                i++;
+            }
+            fMoves[i][0] = -1;
+            return fMoves;
+        }
         return aMoves;
     }
 
@@ -517,7 +533,7 @@ public class ChessBoard {
         for(ChessPiece[] line : board){
             for(ChessPiece piece : line){
                 if(piece != null && piece.getColor() != color){
-                    if(availableMoves(piece.getMove(), piece)[0][0] != -1){
+                    if(availableMoves(piece.getMove(), piece, false)[0][0] != -1){
                         return false;
                     }
                 }
@@ -531,7 +547,7 @@ public class ChessBoard {
         String color = king.getColor();
         for(ChessPiece[] line : board){
             for(ChessPiece piece : line){
-                if(piece != null && piece.getColor() != color && checkChecker(king, availableMoves(piece.getMove(), piece))){
+                if(piece != null && piece.getColor() != color && checkChecker(king, availableMoves(piece.getMove(), piece, false))){
                     return true;
                 }
             }

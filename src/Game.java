@@ -60,7 +60,7 @@ public class Game{
 			}
 
 			moves = piece.getMove();
-			moves = board.availableMoves(moves, piece);
+			moves = board.availableMoves(moves, piece, true);
 			piece.printMovesOnBoard(moves);
 			
 			if(moves[0][0] == -1){
