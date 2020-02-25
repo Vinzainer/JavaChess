@@ -14,7 +14,7 @@ public class Game{
         player2 = new Player(n2);
         turnCpt = 0;
 	}
-	
+
 	public Game(Game game){
 		/* Game -> Game
 		   Constructor copy of Game (should be a deepCopy)*/
@@ -41,14 +41,22 @@ public class Game{
 			color = "White";
 		}
 		else color = "Black";
+        System.out.println(color + " are on ! ");
 		while(!endTurn){
 			System.out.println("\nChose a piece :");
-			System.out.print("number : ");
-			x1 = sc.nextInt() - 1;
-			sc.nextLine();
+            System.out.print("number : ");
+    		x1 = sc.nextInt() - 1;
+    		sc.nextLine();
+            if(x1 < 0 || x1 > 7){
+                System.out.println("Out of board.");
+                continue;
+            }
 			System.out.print("letter : ");
 			y1 = letterToInt(sc.nextLine());
-
+            if(y1 < 0 || y1 > 7){
+                System.out.println("Out of board.");
+                continue;
+            }
 			piece = board.getAt(x1, y1);
 			if(piece == null){
 				System.out.println("No piece at selected location");
@@ -62,7 +70,7 @@ public class Game{
 			moves = piece.getMove();
 			moves = board.availableMoves(moves, piece, true);
 			piece.printMovesOnBoard(moves);
-			
+
 			if(moves[0][0] == -1){
 				System.out.println("No moves available on selected piece");
 				continue;
@@ -79,7 +87,7 @@ public class Game{
 			while(moves[i][0] != -1){
 				if(moves[i][0] == x2 && moves[i][1] == y2){
 					endTurn = true;
-					//sc.close(); //breaks everything 
+					//sc.close(); //breaks everything
 					break;
 				}
 			  i++;
@@ -89,7 +97,7 @@ public class Game{
 				continue;
 			}
 			board.makeMove(x1, y1, x2, y2);
-			
+
 		}
     }
 
@@ -104,13 +112,13 @@ public class Game{
     }
 
     public ChessBoard getBoard(){
-		/* void -> ChessBoard 
+		/* void -> ChessBoard
 		get-er for board */
       	return board;
 	}
-	
+
 	public Player getPlayer1(){
-		/* void -> Player 
+		/* void -> Player
 		   get-er fir player1 */
 		return player1;
 	}
@@ -122,7 +130,7 @@ public class Game{
 	}
 
 	public int getTurn(){
-		/* void -> int 
+		/* void -> int
 		   get-er for turnCpt*/
 		return turnCpt;
 	}
