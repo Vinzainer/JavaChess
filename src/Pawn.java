@@ -11,35 +11,34 @@ public class Pawn extends ChessPiece{
     }
 
     public int[][] getMove(){
-      /* void -> int[][]
+      	/* void -> int[][]
          get the list of potential move for a piece */
-      int[][] moveList = new int[64][2];
-      int x = super.position[0];
-      int y = super.position[1];
-      int j = 0;
+      	int[][] moveList = new int[64][2];
+      	int x = super.position[0];
+      	int y = super.position[1];
+      	int j = 0;
 
-      if(super.color == "Black"){
-        moveList[j][0] = x + 1;
-        moveList[j][1] = y;
-        j++;
-        if(x == 1){
-          moveList[j][0] = x + 2;
-          moveList[j][1] = y;
-          j++;
-        }
-      }
-      else{
-        moveList[j][0] = x - 1;
-        moveList[j][1] = y;
-          if(x == 6){
-            j++;
-            moveList[j][0] = x - 2;
-            moveList[j][1] = y;
-          j++;
-        }
-      }
-
-      moveList[j][0] = -1;
-      return moveList;
+    	if(super.color == "Black"){
+    		moveList[j][0] = x + 1;
+        	moveList[j][1] = y;
+        	j++;
+        	if(x == 1){
+        	  	moveList[j][0] = x + 2;
+        	  	moveList[j][1] = y;
+        	  	j++;
+        	}
+    	}
+    	else{
+    	    moveList[j][0] = x - 1;
+    	    moveList[j][1] = y;
+    	    j++;
+    	    if(x == 6){
+    	        moveList[j][0] = x - 2;
+    	        moveList[j][1] = y;
+    	        j++;
+    	    }
+    	}
+    	moveList[j][0] = -1;
+    	return moveList;
     }
 }

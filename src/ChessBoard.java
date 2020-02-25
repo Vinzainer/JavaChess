@@ -43,7 +43,8 @@ public class ChessBoard {
     public boolean checkChecker(ChessPiece king , int[][] moves ){
 
         for(int[] move : moves){
-            if(king.getPosition() == move){
+            if(move[0] == -1) break;
+            if(king.getPosition()[0] == move[0] && king.getPosition()[1] == move[1]){
                 return true;
             }
         }
@@ -499,25 +500,17 @@ public class ChessBoard {
             }
         }
         aMoves[j][0] = -1;
-        int[][] nMoves = new int[64][2];
-        ChessBoard boardCopy;;
-        ChessPiece king;
-        int i = 0;
-        for(int[] move : aMoves){
-            if(move[0] == -1) break;
-            boardCopy = new ChessBoard(this);
-            boardCopy.makeMove(pieceX, pieceY, move[0], move[1]);
-            //System.out.println(toString());
-            //System.out.println(boardCopy.toString());
-            //System.out.println(toString());
-            king = getKing(piece.getColor());
-            if(!checkChecker(king, aMoves)){
-                nMoves[i] = move;
-                i++; 
-            }
+        return aMoves;
+    }
+
+    public int[][] tmp(String color, int[][] moves, boolean stop){
+        int[][] res = new int[64][2];
+
+        for(int[] move : moves){
+            
         }
-        nMoves[i][0] = -1;
-        return nMoves;
+
+        return res;
     }
 
     public boolean checkMate(String color){
@@ -533,14 +526,29 @@ public class ChessBoard {
         return true;
     }
 
+    public boolean inCheck(ChessPiece king){
+        //System.out.println(king == null);
+        String color = king.getColor();
+        for(ChessPiece[] line : board){
+            for(ChessPiece piece : line){
+                if(piece != null && piece.getColor() != color && checkChecker(king, availableMoves(piece.getMove(), piece))){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public ChessPiece getKing(String color){
         for(ChessPiece[] line : board){
             for(ChessPiece piece : line){
-                if(piece instanceof King && piece.getColor() == color){
+                if(piece != null && piece instanceof King && piece.getColor() == color){
                     return piece;
                 }
             }
         }
+        //System.out.println("out");
+
         return null;
     }
 

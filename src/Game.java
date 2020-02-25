@@ -89,7 +89,6 @@ public class Game{
 				continue;
 			}
 			board.makeMove(x1, y1, x2, y2);
-
 			
 		}
     }
