@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.lang.Math;
 
 public class ChessBoard {
@@ -9,8 +10,8 @@ public class ChessBoard {
            Create an 8*8 ChessPiece[][] and initialise it to the standard piece disposition
            empty cases are null*/
 
-        board = new ChessPiece[8][8]; 
-        
+        board = new ChessPiece[8][8];
+
         for (int i = 0; i < 8; i++){
             if (i == 0 || i == 7){
                 board[0][i] = new Rook("Black",0,i);
@@ -108,7 +109,7 @@ public class ChessBoard {
 
     public int setAt(ChessPiece piece ,int posx ,int posy){
         /* ChessPiece * int * int -> int
-           Set-er  for Board 
+           Set-er  for Board
            return 1 if successfull*/
         if(posx >= 8 || posx < 0) return 0;
         if(posx >= 8 || posx < 0) return 0;
@@ -134,12 +135,12 @@ public class ChessBoard {
     }
 
     public int movePiece(int pieceX, int pieceY, int posx, int posy){
-        /* int * int * int * int -> void 
-           move the piece at point 1 to point 2 
+        /* int * int * int * int -> void
+           move the piece at point 1 to point 2
            point 1 becomes null after */
         if(posx >= 8 || posx < 0 || posy >= 8 || posy < 0) return 0;            //out of range
         if(pieceX >= 8 || pieceX < 0 || pieceY >= 8 || pieceY < 0) return 0;    //out of range
-        ChessPiece tmpPiece = board[pieceX][pieceY];                            
+        ChessPiece tmpPiece = board[pieceX][pieceY];
         if(tmpPiece == null) return 0;                                          //no piece at board[pieceX][pieceY]
         if(board[posx][posy] != null && tmpPiece.getColor() == board[posx][posy].getColor()) return 0;       //piece of same color
         board[posx][posy] = tmpPiece;
@@ -201,10 +202,13 @@ public class ChessBoard {
             if(y1 - y2 < 0){
                 castle(piece, board[x1][7]);
             }
-            else castle(piece, board[x1][0]);      
+            else castle(piece, board[x1][0]);
         }
         else{
             movePiece(x1, y1, x2, y2);
+        }
+        if(piece instanceof Pawn && ((Pawn)piece).upgradable()){
+            upgrade(piece);
         }
         return true;
     }
@@ -297,7 +301,7 @@ public class ChessBoard {
                     return false;
                 }
             }
-        }        
+        }
         else if(dx > 0 && dy < 0){
             for(int i = x1 - 1, j = y1 + 1; i >= x2; i--,j++){
                 ChessPiece tmpPiece = board[i][j];
@@ -308,7 +312,7 @@ public class ChessBoard {
                     return false;
                 }
             }
-        }        
+        }
         else if(dx > 0 && dy > 0){
             for(int i = x1 - 1, j = y1 - 1; i >= x2; i--,j--){
                 ChessPiece tmpPiece = board[i][j];
@@ -339,7 +343,7 @@ public class ChessBoard {
                 int y = move[1];
                 if(board[x][y] == null || board[x][y].getColor() != piece.getColor()){
                     aMoves[j] = move;
-                    j++; 
+                    j++;
                 }
             }
         }
@@ -350,7 +354,7 @@ public class ChessBoard {
                 if(tmpPiece instanceof Rook){
                     Rook tmpRook = (Rook)tmpPiece;
                     if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
-                        
+
                         int[] nMove = {0,1};
                         aMoves[j] = nMove;
                         j++;
@@ -394,7 +398,7 @@ public class ChessBoard {
                 int y = move[1];
                 if(board[x][y] == null || board[x][y].getColor() != piece.getColor()){
                     aMoves[j] = move;
-                    j++; 
+                    j++;
                 }
             }
         }
@@ -403,10 +407,10 @@ public class ChessBoard {
                 if(move[0] == -1) break;
                 int x = move[0];
                 int y = move[1];
-              	
+
                 if(vertEmpty(pieceX, pieceY, x, y)){
                     aMoves[j] = move;
-                    j++; 
+                    j++;
                 }
 
             }
@@ -416,10 +420,10 @@ public class ChessBoard {
                 if(move[0] == -1) break;
                 int x = move[0];
                 int y = move[1];
-                
+
                 if(crossEmpty(pieceX, pieceY, x, y)){
                     aMoves[j] = move;
-                    j++; 
+                    j++;
                 }
 
             }
@@ -432,25 +436,25 @@ public class ChessBoard {
                 if(x != piece.getPosition()[0] && y != piece.getPosition()[1]){
                     if(crossEmpty(pieceX, pieceY, x, y)){
                         aMoves[j] = move;
-                        j++; 
+                        j++;
                     }
                 }
                 else{
                     if(vertEmpty(pieceX, pieceY, x, y)){
                         aMoves[j] = move;
-                        j++; 
+                        j++;
                     }
                 }
             }
         }
-        else if( piece instanceof Pawn){
+        else if(piece instanceof Pawn){
             for(int[] move : moves){
                 if(move[0] == -1) break;
                 int y = move[1];
                 int x = move[0];
                 if(board[x][y] == null){
                     aMoves[j] = move;
-                    j++; 
+                    j++;
                 }
             }
 
@@ -462,7 +466,7 @@ public class ChessBoard {
                             nmove[0] = pieceX - 1;
                             nmove[1] = pieceY - 1;
                             aMoves[j] = nmove;
-                            j++; 
+                            j++;
                         }
                     }
                     if(pieceY + 1 < 8){
@@ -471,7 +475,7 @@ public class ChessBoard {
                             nmove[0] = pieceX - 1;
                             nmove[1] = pieceY + 1;
                             aMoves[j] = nmove;
-                            j++; 
+                            j++;
                         }
                     }
                 }
@@ -484,7 +488,7 @@ public class ChessBoard {
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY - 1;
                             aMoves[j] = nmove;
-                            j++; 
+                            j++;
                         }
                     }
                     if(pieceY + 1 < 8){
@@ -493,7 +497,7 @@ public class ChessBoard {
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY + 1;
                             aMoves[j] = nmove;
-                            j++;    
+                            j++;
                         }
                     }
                 }
@@ -507,7 +511,7 @@ public class ChessBoard {
         int[][] res = new int[64][2];
 
         for(int[] move : moves){
-            
+
         }
 
         return res;
@@ -552,4 +556,38 @@ public class ChessBoard {
         return null;
     }
 
+    public boolean upgrade(ChessPiece piece){
+        int choice;
+        System.out.println("You need to change your pawn into a: \n1.Queen\n2.Rook\n3.Bishop\n4.Knight");
+        System.out.println("Choose your fighter : ");
+        Scanner sc = new Scanner(System.in);
+        choice = sc.nextInt();
+
+        ChessPiece newPiece;
+        int x = piece.getPosition()[0];
+        int y = piece.getPosition()[1];
+        String color = piece.getColor();
+
+        switch (choice){
+            case 1:
+                newPiece = new Queen(color, x, y);
+                setAt(newPiece,x,y);
+                return true;
+            case 2:
+                newPiece = new Rook(color, x, y);
+                setAt(newPiece,x,y);
+                return true;
+            case 3:
+                newPiece = new Bishop(color, x, y);
+                setAt(newPiece,x,y);
+                return true;
+            case 4:
+                newPiece = new Knight(color, x, y);
+                setAt(newPiece,x,y);
+                return true;
+            default:
+                System.out.println("Wrong choice.");
+        };
+        return false;
+    }
 }

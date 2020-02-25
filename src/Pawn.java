@@ -1,4 +1,4 @@
-public class Pawn extends ChessPiece{
+public class Pawn extends ChessPiece implements Upgradable{
 
     public Pawn(String color, int posx, int posy){
         /* Constructor  String -> Pawn */
@@ -40,5 +40,11 @@ public class Pawn extends ChessPiece{
     	}
     	moveList[j][0] = -1;
     	return moveList;
+    }
+
+    public boolean upgradable(){
+      if(super.color == "White" && super.position[0] == 0) return true;
+      if(super.color == "Black" && super.position[0] == 7) return true;
+      return false;
     }
 }
