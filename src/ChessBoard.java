@@ -349,50 +349,58 @@ public class ChessBoard {
             }
         }
         else if(piece instanceof King){
-            King tmpKing = (King)piece; // Should always be a king
-            if(tmpKing.getColor() == "Black"){
-                ChessPiece tmpPiece = board[0][0];
-                if(tmpPiece instanceof Rook){
-                    Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
-
-                        int[] nMove = {0,1};
-                        aMoves[j] = nMove;
-                        j++;
+            if(piece != null && checkChecker && inCheck(piece)){
+                King tmpKing = (King)piece; // Should always be a king
+                if(tmpKing.getColor() == "Black"){
+                        ChessPiece tmpPiece = board[0][0];
+                        if(tmpPiece instanceof Rook){
+                            Rook tmpRook = (Rook)tmpPiece;
+                            if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
+                                if(!inCheck(new King("Black",0,3)) && !inCheck(new King("Black",0,2))){     
+                                    int[] nMove = {0,2};
+                                    aMoves[j] = nMove;
+                                    j++;
+                                }
+                            }
+                        }
+                        tmpPiece = board[0][7];
+                        if(tmpPiece instanceof Rook){
+                            Rook tmpRook = (Rook)tmpPiece;
+                            if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 6)){
+                                if(!inCheck(new King("Black",0,6)) && !inCheck(new King("Black",0,5))){
+                                    int[] nMove = {0,6};
+                                    aMoves[j] = nMove;
+                                    j++;
+                                }
+                            }
+                        }
                     }
-                }
-                tmpPiece = board[0][7];
-                if(tmpPiece instanceof Rook){
-                    Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 6)){
-                        int[] nMove = {0,6};
-                        aMoves[j] = nMove;
-                        j++;
+                    else{
+                        ChessPiece tmpPiece = board[7][0];
+                        if(tmpPiece instanceof Rook){
+                        Rook tmpRook = (Rook)tmpPiece;
+                        if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 1)){
+                            if(!inCheck(new King("White",7,2)) && !inCheck(new King("White",7,3))){
+                                int[] nMove = {7,2};
+                                aMoves[j] = nMove;
+                                j++;
+                            }
+                        }
+                    }
+                    tmpPiece = board[0][7];
+                    if(tmpPiece instanceof Rook){
+                        Rook tmpRook = (Rook)tmpPiece;
+                        if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 6)){
+                            if(!inCheck(new King("White",7,6)) && !inCheck(new King("White",7,5))){
+                                int[] nMove = {7,6};
+                                aMoves[j] = nMove;
+                                j++;
+                            }
+                        }
                     }
                 }
             }
-            else{
-                ChessPiece tmpPiece = board[7][0];
-                if(tmpPiece instanceof Rook){
-                    Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 1)){
-
-                        int[] nMove = {7,1};
-                        aMoves[j] = nMove;
-                        j++;
-                    }
-                }
-                tmpPiece = board[0][7];
-                if(tmpPiece instanceof Rook){
-                    Rook tmpRook = (Rook)tmpPiece;
-                    if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 7, 6)){
-                        int[] nMove = {7,6};
-                        aMoves[j] = nMove;
-                        j++;
-                    }
-                }
-            }
-
+            
             for(int[] move : moves){
                 if(move[0] == -1) break;
                 int x = move[0];

@@ -31,7 +31,6 @@ public class Game{
 
     public void nextMove(){
 		Scanner sc = new Scanner(System.in);
-		ChessBoard tmpBoard;
 		int x1,y1,x2,y2;
 		boolean endTurn = false;
 		String color;
