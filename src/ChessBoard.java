@@ -86,10 +86,6 @@ public class ChessBoard {
         board = tmp;
     }
 
-    private char intToChar(int i){
-        return (char)(i + 65);
-    }
-
     public String toString(){
         /* this -> String */
         String str = "\n";
@@ -158,24 +154,19 @@ public class ChessBoard {
         int xk;
         int yk;
         String color = piece1.getColor();
-        ChessPiece rook, king;
         if(color != piece2.getColor()){
             return false;
         }
 
         if(piece1 instanceof Rook){
-            rook = piece1;
             xr = piece1.getPosition()[0];
             yr = piece1.getPosition()[1];
-            king = piece2;
             xk = piece2.getPosition()[0];
             yk = piece2.getPosition()[1];
         }
         else{
-            rook = piece2;
             xr = piece2.getPosition()[0];
             yr = piece2.getPosition()[1];
-            king = piece1;
             xk = piece1.getPosition()[0];
             yk = piece1.getPosition()[1];
         }
@@ -499,7 +490,6 @@ public class ChessBoard {
                 if(pieceX + 1 < 8){
                     if(pieceY - 1 >= 0){
                         if(board[pieceX + 1][pieceY - 1] != null && board[pieceX + 1][pieceY - 1].getColor() != "Black"){       //check if they are on their initial position
-                            int[] nmove = new int[2];
                             int[] nmove = new int[2];
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY - 1;
