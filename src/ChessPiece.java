@@ -27,6 +27,8 @@ public abstract class ChessPiece{
     }
 
 	public void addMove(){
+		/* void -> void
+		   adds 1 to the nbMoves of the piece */
 		nbMove++;
 	}
 

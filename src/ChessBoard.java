@@ -330,8 +330,14 @@ public class ChessBoard {
     }
 
     public int[][] availableMoves(int[][] moves, ChessPiece piece, boolean checkChecker){
-        /* int[][] * ChessPiece -> int[][]
+        /* int[][] * ChessPiece * boolean -> int[][]
            change move to only the legal moves available and adds other special moves for some pieces if available
+           rules :
+            -Piece can eat piece of other color exept for the pawn who need to be on specific position (explained in commment)
+            -King can castle if conditions are met
+            -if a move put yourself in check it is not a available move. However the boolean checkChecker handle if you want to check
+                if you are in check or not
+            -Pawn can move 2 postion if they haven't move from their initial position
             */
         int[][] aMoves = new int[64][2];
         int pieceX = piece.getPosition()[0];
@@ -349,14 +355,14 @@ public class ChessBoard {
             }
         }
         else if(piece instanceof King){
-            if(piece != null && checkChecker && inCheck(piece)){
-                King tmpKing = (King)piece; // Should always be a king
-                if(tmpKing.getColor() == "Black"){
+            if(piece != null && checkChecker && inCheck(piece)){                //cannot castle if in check
+                King tmpKing = (King)piece;                         // Should always be a king / cast to King to use caslteable
+                if(tmpKing.getColor() == "Black"){                      //black case
                         ChessPiece tmpPiece = board[0][0];
                         if(tmpPiece instanceof Rook){
                             Rook tmpRook = (Rook)tmpPiece;
-                            if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){
-                                if(!inCheck(new King("Black",0,3)) && !inCheck(new King("Black",0,2))){     
+                            if(tmpRook.castleable() && tmpKing.castleable() && vertEmpty(pieceX, pieceY, 0, 1)){        //cannot castle if the king or the rook has moved
+                                if(!inCheck(new King("Black",0,3)) && !inCheck(new King("Black",0,2))){                 //cannot castle if the cases is under influence of opponent piece
                                     int[] nMove = {0,2};
                                     aMoves[j] = nMove;
                                     j++;
@@ -375,7 +381,7 @@ public class ChessBoard {
                             }
                         }
                     }
-                    else{
+                    else{                       //white case
                         ChessPiece tmpPiece = board[7][0];
                         if(tmpPiece instanceof Rook){
                         Rook tmpRook = (Rook)tmpPiece;
@@ -401,7 +407,7 @@ public class ChessBoard {
                 }
             }
             
-            for(int[] move : moves){
+            for(int[] move : moves){    //handles non special moves
                 if(move[0] == -1) break;
                 int x = move[0];
                 int y = move[1];
@@ -411,7 +417,7 @@ public class ChessBoard {
                 }
             }
         }
-        else if(piece instanceof Rook){
+        else if(piece instanceof Rook){  //no special rules
             for(int[] move : moves){
                 if(move[0] == -1) break;
                 int x = move[0];
@@ -424,7 +430,7 @@ public class ChessBoard {
 
             }
         }
-        else if(piece instanceof Bishop){
+        else if(piece instanceof Bishop){   //no special rules 
             for(int[] move : moves){
                 if(move[0] == -1) break;
                 int x = move[0];
@@ -437,7 +443,7 @@ public class ChessBoard {
 
             }
         }
-        else if( piece instanceof Queen){
+        else if( piece instanceof Queen){  //no special rules
             for(int[] move : moves){
                 if(move[0] == -1) break;
                 int x = move[0];
@@ -456,7 +462,7 @@ public class ChessBoard {
                 }
             }
         }
-        else if(piece instanceof Pawn){
+        else if(piece instanceof Pawn){         
             for(int[] move : moves){
                 if(move[0] == -1) break;
                 int y = move[1];
@@ -470,7 +476,7 @@ public class ChessBoard {
             if(piece.getColor() == "White"){
                 if(pieceX - 1 >= 0){
                     if(pieceY -1 >= 0){
-                        if(board[pieceX - 1][pieceY - 1] != null && board[pieceX - 1][pieceY - 1].getColor() != "White"){
+                        if(board[pieceX - 1][pieceY - 1] != null && board[pieceX - 1][pieceY - 1].getColor() != "White"){       //check if they are on their initial position
                             int[] nmove = new int[2];
                             nmove[0] = pieceX - 1;
                             nmove[1] = pieceY - 1;
@@ -479,7 +485,7 @@ public class ChessBoard {
                         }
                     }
                     if(pieceY + 1 < 8){
-                        if(board[pieceX -1][pieceY + 1] != null && board[pieceX - 1][pieceY + 1].getColor() != "White"){
+                        if(board[pieceX -1][pieceY + 1] != null && board[pieceX - 1][pieceY + 1].getColor() != "White"){        //check if they are on their initial position
                             int[] nmove = new int[2];
                             nmove[0] = pieceX - 1;
                             nmove[1] = pieceY + 1;
@@ -492,7 +498,8 @@ public class ChessBoard {
             else{
                 if(pieceX + 1 < 8){
                     if(pieceY - 1 >= 0){
-                        if(board[pieceX + 1][pieceY - 1] != null && board[pieceX + 1][pieceY - 1].getColor() != "Black"){
+                        if(board[pieceX + 1][pieceY - 1] != null && board[pieceX + 1][pieceY - 1].getColor() != "Black"){       //check if they are on their initial position
+                            int[] nmove = new int[2];
                             int[] nmove = new int[2];
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY - 1;
@@ -501,7 +508,7 @@ public class ChessBoard {
                         }
                     }
                     if(pieceY + 1 < 8){
-                        if(board[pieceX + 1][pieceY + 1] != null && board[pieceX + 1][pieceY + 1].getColor() != "Black"){
+                        if(board[pieceX + 1][pieceY + 1] != null && board[pieceX + 1][pieceY + 1].getColor() != "Black"){          //check if they are on their initial position
                             int[] nmove = new int[2];
                             nmove[0] = pieceX + 1;
                             nmove[1] = pieceY + 1;
@@ -513,7 +520,7 @@ public class ChessBoard {
             }
         }
         aMoves[j][0] = -1;
-        if(checkChecker){
+        if(checkChecker){                   // removing moves that puts you or keeps you in check
             int[][] fMoves = new int[64][2];
             ChessBoard boardCopy;
             int i = 0;
@@ -532,17 +539,11 @@ public class ChessBoard {
         return aMoves;
     }
 
-    public int[][] tmp(String color, int[][] moves, boolean stop){
-        int[][] res = new int[64][2];
-
-        for(int[] move : moves){
-
-        }
-
-        return res;
-    }
-
     public boolean checkMate(ChessPiece king){
+        /* ChessPiece -> boolean 
+           return true if the player of the piece color is in checkMate
+           king should be a King but it works for other pieces too 
+           return false if you have at least one move that puts you out of check otherwise return true */
         String color = king.getColor();
         int[][] aMoves;
         for(ChessPiece[] line : board){
@@ -560,7 +561,10 @@ public class ChessBoard {
     }
 
     public boolean inCheck(ChessPiece king){
-        //System.out.println(king == null);
+        /* ChessPiece -> boolean
+           return true if king is in check
+           king should be King but works with other pieces too
+            */
         String color = king.getColor();
         for(ChessPiece[] line : board){
             for(ChessPiece piece : line){
@@ -573,6 +577,9 @@ public class ChessBoard {
     }
 
     public ChessPiece getKing(String color){
+        /* String -> ChessPiece 
+           returns a king of the color in parameter 
+           if there is no king of the color return null*/
         for(ChessPiece[] line : board){
             for(ChessPiece piece : line){
                 if(piece != null && piece instanceof King && piece.getColor() == color){
@@ -586,6 +593,7 @@ public class ChessBoard {
     }
 
     public boolean upgrade(ChessPiece piece){
+        /* to do  */
         int choice;
         System.out.println("You need to change your pawn into a: \n1.Queen\n2.Rook\n3.Bishop\n4.Knight");
         System.out.println("Choose your fighter : ");

@@ -30,38 +30,40 @@ public class Game{
 	}
 
     public void nextMove(){
+		/* void -> void 
+		   handles the majority of a turn execution*/
 		Scanner sc = new Scanner(System.in);
 		int x1,y1,x2,y2;
 		boolean endTurn = false;
 		String color;
 		ChessPiece piece;
 		int[][] moves;
-		if(turnCpt % 2 == 0){
+		if(turnCpt % 2 == 0){  //color checker 
 			color = "White";
 		}
 		else color = "Black";
         System.out.println(color + " are on ! ");
-		while(!endTurn){
+		while(!endTurn){ 							//loop for wrong input
 			System.out.println("\nChoose a piece :");
             System.out.print("Line number : ");
-    		x1 = sc.nextInt() - 1;
-    		sc.nextLine();
-            if(x1 < 0 || x1 > 7){
+    		x1 = sc.nextInt() - 1;   				//scan for a position in the board then substract 1 to fit the list 
+    		sc.nextLine();							//skip line 
+            if(x1 < 0 || x1 > 7){					//security for OOB
                 System.out.println("Out of board.");
                 continue;
             }
 			System.out.print("Line letter : ");
-			y1 = letterToInt(sc.nextLine());
+			y1 = letterToInt(sc.nextLine());		//scan for a letter and convert it to an int to fit the list
             if(y1 < 0 || y1 > 7){
                 System.out.println("Out of board.");
                 continue;
             }
 			piece = board.getAt(x1, y1);
-			if(piece == null){
+			if(piece == null){						//security if position is empty
 				System.out.println("No piece at selected location");
 				continue;
 			}
-			if(piece.getColor() != color){
+			if(piece.getColor() != color){			//security if selected position has a piece of the wrong color
 				System.out.println("Selected Piece is not yours");
 				continue;
 			}
@@ -69,30 +71,29 @@ public class Game{
 			moves = piece.getMove();
 			moves = board.availableMoves(moves, piece, true);
 			
-			if(moves[0][0] == -1){
+			if(moves[0][0] == -1){					//security if piece has no moves available
 				System.out.println("No moves available on selected piece");
 				continue;
 			}
-			
+
 			piece.printMovesOnBoard(moves);
 
-			System.out.println("Choose a move : ");
-			System.out.print("Line number : ");
-			x2 = sc.nextInt() - 1;
-			sc.nextLine();
-			System.out.print("Line letter : ");
-			y2 = letterToInt(sc.nextLine());
+			System.out.println("Choose a move : ");		//
+			System.out.print("Line number : ");			//
+			x2 = sc.nextInt() - 1;						//Same as first 
+			sc.nextLine();								//
+			System.out.print("Line letter : ");			//
+			y2 = letterToInt(sc.nextLine());			//
 
 			int i = 0;
 			while(moves[i][0] != -1){
 				if(moves[i][0] == x2 && moves[i][1] == y2){
 					endTurn = true;
-					//sc.close(); //breaks everything
 					break;
 				}
 			  i++;
 			}
-			if(!endTurn){
+			if(!endTurn){								//security if selected move is not in the available moves of the selected piece
 				System.out.println("Selected move is not available");
 				continue;
 			}
@@ -102,6 +103,11 @@ public class Game{
     }
 
 	public boolean winChecker(ChessPiece king){
+		/* ChessPiece -> boolean
+		   return if the king is in checkmate 
+		   it calls for a function of board that checks if the pieces of the same color as the king
+		   has a move list size over 0
+		   if one piece can move and makes the king no longer in check it means its not in checkmate*/
 		return board.checkMate(king);
 	}
 
