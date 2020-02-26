@@ -68,12 +68,13 @@ public class Game{
 
 			moves = piece.getMove();
 			moves = board.availableMoves(moves, piece, true);
-			piece.printMovesOnBoard(moves);
-
+			
 			if(moves[0][0] == -1){
 				System.out.println("No moves available on selected piece");
 				continue;
 			}
+			
+			piece.printMovesOnBoard(moves);
 
 			System.out.println("Choose a move : ");
 			System.out.print("Line number : ");

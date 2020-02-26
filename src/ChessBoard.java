@@ -523,8 +523,8 @@ public class ChessBoard {
                 boardCopy.makeMove(pieceX, pieceY, move[0], move[1]);
                 if(!boardCopy.inCheck(boardCopy.getKing(piece.getColor()))){
                     fMoves[i] = move;
+                    i++;
                 }
-                i++;
             }
             fMoves[i][0] = -1;
             return fMoves;
@@ -543,15 +543,19 @@ public class ChessBoard {
     }
 
     public boolean checkMate(ChessPiece king){
-        int[][] move = availableMoves(king.getMove(), king, true);
-        for(int[] m : move){
-            ChessBoard tmpBoard = new ChessBoard(this);
-            tmpBoard.setAt(king, m[0], m[1]);
-
-            if(tmpBoard.inCheck(king) != true){
-                return false;
+        String color = king.getColor();
+        int[][] aMoves;
+        for(ChessPiece[] line : board){
+            for(ChessPiece piece : line){
+                if(piece != null && piece.getColor() == color){
+                    aMoves = availableMoves(piece.getMove(), piece, true);
+                    if(aMoves[0][0] != -1 ){
+                        return false;
+                    }
+                }
             }
-        }
+        }    
+
         return true;
     }
 
